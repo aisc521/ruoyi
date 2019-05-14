@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.CarInfoMapper">
+    
+    <resultMap type="CarInfo" id="CarInfoResult">
+        <result property="carId"    column="car_id"    />
+        <result property="carLicense"    column="car_license"    />
+        <result property="carType"    column="car_type"    />
+        <result property="carOwerName"    column="car_ower_name"    />
+        <result property="carOwnerAddress"    column="car_owner_address"    />
+        <result property="carUseType"    column="car_use_type"    />
+        <result property="carBrand"    column="car_brand"    />
+        <result property="carIdCode"    column="car_id_code"    />
+        <result property="carEngineNum"    column="car_engine_num"    />
+        <result property="carRegistDate"    column="car_regist_date"    />
+        <result property="carCertificateDate"    column="car_certificate_date"    />
+        <result property="carNuclearNum"    column="car_nuclear_num"    />
+        <result property="carTotalMass"    column="car_total_mass"    />
+        <result property="carCurbWeight"    column="car_curb_weight"    />
+        <result property="createDate"    column="create_date"    />
+    </resultMap>
+	
+	<sql id="selectCarInfoVo">
+        select car_id, car_license, car_type, car_ower_name, car_owner_address, car_use_type, car_brand, car_id_code, car_engine_num, car_regist_date, car_certificate_date, car_nuclear_num, car_total_mass, car_curb_weight, create_date from sys_car_info
+    </sql>
+	
+    <select id="selectCarInfoList" parameterType="CarInfo" resultMap="CarInfoResult">
+        <include refid="selectCarInfoVo"/>
+        <where>  
+            <if test="carId != null "> and car_id = #{carId}</if>
+             <if test="carLicense != null  and carLicense != '' "> and car_license = #{carLicense}</if>
+             <if test="carType != null "> and car_type = #{carType}</if>
+             <if test="carOwerName != null  and carOwerName != '' "> and car_ower_name = #{carOwerName}</if>
+             <if test="carOwnerAddress != null  and carOwnerAddress != '' "> and car_owner_address = #{carOwnerAddress}</if>
+             <if test="carUseType != null "> and car_use_type = #{carUseType}</if>
+             <if test="carBrand != null  and carBrand != '' "> and car_brand = #{carBrand}</if>
+             <if test="carIdCode != null  and carIdCode != '' "> and car_id_code = #{carIdCode}</if>
+             <if test="carEngineNum != null  and carEngineNum != '' "> and car_engine_num = #{carEngineNum}</if>
+             <if test="carRegistDate != null "> and car_regist_date = #{carRegistDate}</if>
+             <if test="carCertificateDate != null "> and car_certificate_date = #{carCertificateDate}</if>
+             <if test="carNuclearNum != null "> and car_nuclear_num = #{carNuclearNum}</if>
+             <if test="carTotalMass != null "> and car_total_mass = #{carTotalMass}</if>
+             <if test="carCurbWeight != null "> and car_curb_weight = #{carCurbWeight}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+         </where>
+    </select>
+    
+    <select id="selectCarInfoById" parameterType="Integer" resultMap="CarInfoResult">
+        <include refid="selectCarInfoVo"/>
+        where car_id = #{carId}
+    </select>
+        
+    <insert id="insertCarInfo" parameterType="CarInfo">
+        insert into sys_car_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="carId != null  ">car_id,</if>
+			<if test="carLicense != null  and carLicense != ''  ">car_license,</if>
+			<if test="carType != null  ">car_type,</if>
+			<if test="carOwerName != null  and carOwerName != ''  ">car_ower_name,</if>
+			<if test="carOwnerAddress != null  and carOwnerAddress != ''  ">car_owner_address,</if>
+			<if test="carUseType != null  ">car_use_type,</if>
+			<if test="carBrand != null  and carBrand != ''  ">car_brand,</if>
+			<if test="carIdCode != null  and carIdCode != ''  ">car_id_code,</if>
+			<if test="carEngineNum != null  and carEngineNum != ''  ">car_engine_num,</if>
+			<if test="carRegistDate != null  ">car_regist_date,</if>
+			<if test="carCertificateDate != null  ">car_certificate_date,</if>
+			<if test="carNuclearNum != null  ">car_nuclear_num,</if>
+			<if test="carTotalMass != null  ">car_total_mass,</if>
+			<if test="carCurbWeight != null  ">car_curb_weight,</if>
+			<if test="createDate != null  ">create_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="carId != null  ">#{carId},</if>
+			<if test="carLicense != null  and carLicense != ''  ">#{carLicense},</if>
+			<if test="carType != null  ">#{carType},</if>
+			<if test="carOwerName != null  and carOwerName != ''  ">#{carOwerName},</if>
+			<if test="carOwnerAddress != null  and carOwnerAddress != ''  ">#{carOwnerAddress},</if>
+			<if test="carUseType != null  ">#{carUseType},</if>
+			<if test="carBrand != null  and carBrand != ''  ">#{carBrand},</if>
+			<if test="carIdCode != null  and carIdCode != ''  ">#{carIdCode},</if>
+			<if test="carEngineNum != null  and carEngineNum != ''  ">#{carEngineNum},</if>
+			<if test="carRegistDate != null  ">#{carRegistDate},</if>
+			<if test="carCertificateDate != null  ">#{carCertificateDate},</if>
+			<if test="carNuclearNum != null  ">#{carNuclearNum},</if>
+			<if test="carTotalMass != null  ">#{carTotalMass},</if>
+			<if test="carCurbWeight != null  ">#{carCurbWeight},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCarInfo" parameterType="CarInfo">
+        update sys_car_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="carLicense != null  and carLicense != ''  ">car_license = #{carLicense},</if>
+            <if test="carType != null  ">car_type = #{carType},</if>
+            <if test="carOwerName != null  and carOwerName != ''  ">car_ower_name = #{carOwerName},</if>
+            <if test="carOwnerAddress != null  and carOwnerAddress != ''  ">car_owner_address = #{carOwnerAddress},</if>
+            <if test="carUseType != null  ">car_use_type = #{carUseType},</if>
+            <if test="carBrand != null  and carBrand != ''  ">car_brand = #{carBrand},</if>
+            <if test="carIdCode != null  and carIdCode != ''  ">car_id_code = #{carIdCode},</if>
+            <if test="carEngineNum != null  and carEngineNum != ''  ">car_engine_num = #{carEngineNum},</if>
+            <if test="carRegistDate != null  ">car_regist_date = #{carRegistDate},</if>
+            <if test="carCertificateDate != null  ">car_certificate_date = #{carCertificateDate},</if>
+            <if test="carNuclearNum != null  ">car_nuclear_num = #{carNuclearNum},</if>
+            <if test="carTotalMass != null  ">car_total_mass = #{carTotalMass},</if>
+            <if test="carCurbWeight != null  ">car_curb_weight = #{carCurbWeight},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+        </trim>
+        where car_id = #{carId}
+    </update>
+
+	<delete id="deleteCarInfoById" parameterType="Integer">
+        delete from sys_car_info where car_id = #{carId}
+    </delete>
+	
+    <delete id="deleteCarInfoByIds" parameterType="String">
+        delete from sys_car_info where car_id in 
+        <foreach item="carId" collection="array" open="(" separator="," close=")">
+            #{carId}
+        </foreach>
+    </delete>
+    
+</mapper>

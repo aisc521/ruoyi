@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('修改车辆')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-carInfo-edit" th:object="${carInfo}">
+            <input id="carId" name="carId" th:field="*{carId}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">车牌号码：</label>
+				<div class="col-sm-8">
+					<input id="carLicense" name="carLicense" th:field="*{carLicense}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">车辆类型：</label>
+				<div class="col-sm-8">
+					<input id="carType" name="carType" th:field="*{carType}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">车辆所有人姓名：</label>
+				<div class="col-sm-8">
+					<input id="carOwerName" name="carOwerName" th:field="*{carOwerName}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">车辆所有人地址：</label>
+				<div class="col-sm-8">
+					<input id="carOwnerAddress" name="carOwnerAddress" th:field="*{carOwnerAddress}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">车辆使用性质：</label>
+				<div class="col-sm-8">
+					<input id="carUseType" name="carUseType" th:field="*{carUseType}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">车辆品牌型号：</label>
+				<div class="col-sm-8">
+					<input id="carBrand" name="carBrand" th:field="*{carBrand}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">车辆识别代码：</label>
+				<div class="col-sm-8">
+					<input id="carIdCode" name="carIdCode" th:field="*{carIdCode}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">车辆发动机号码：</label>
+				<div class="col-sm-8">
+					<input id="carEngineNum" name="carEngineNum" th:field="*{carEngineNum}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">车辆注册日期：</label>
+				<div class="col-sm-8">
+					<input id="carRegistDate" name="carRegistDate" th:field="*{carRegistDate}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">车辆发证日期：</label>
+				<div class="col-sm-8">
+					<input id="carCertificateDate" name="carCertificateDate" th:field="*{carCertificateDate}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">核载人数：</label>
+				<div class="col-sm-8">
+					<input id="carNuclearNum" name="carNuclearNum" th:field="*{carNuclearNum}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">车辆总质量：</label>
+				<div class="col-sm-8">
+					<input id="carTotalMass" name="carTotalMass" th:field="*{carTotalMass}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">汽车整备质量：</label>
+				<div class="col-sm-8">
+					<input id="carCurbWeight" name="carCurbWeight" th:field="*{carCurbWeight}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">创建时间：</label>
+				<div class="col-sm-8">
+					<input id="createDate" name="createDate" th:field="*{createDate}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/carInfo";
+		$("#form-carInfo-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-carInfo-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

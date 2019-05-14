@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.CarYearlyInspInfoMapper">
+    
+    <resultMap type="CarYearlyInspInfo" id="CarYearlyInspInfoResult">
+        <result property="id"    column="id"    />
+        <result property="carId"    column="car_id"    />
+        <result property="yeraInspDate"    column="yera_insp_date"    />
+        <result property="yearInspCost"    column="year_insp_cost"    />
+        <result property="yearInspDes"    column="year_insp_des"    />
+        <result property="yearInspPeople"    column="year_insp_people"    />
+    </resultMap>
+	
+	<sql id="selectCarYearlyInspInfoVo">
+        select id, car_id, yera_insp_date, year_insp_cost, year_insp_des, year_insp_people from car_yearly_insp_info
+    </sql>
+	
+    <select id="selectCarYearlyInspInfoList" parameterType="CarYearlyInspInfo" resultMap="CarYearlyInspInfoResult">
+        <include refid="selectCarYearlyInspInfoVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="carId != null "> and car_id = #{carId}</if>
+             <if test="yeraInspDate != null "> and yera_insp_date = #{yeraInspDate}</if>
+             <if test="yearInspCost != null "> and year_insp_cost = #{yearInspCost}</if>
+             <if test="yearInspDes != null  and yearInspDes != '' "> and year_insp_des = #{yearInspDes}</if>
+             <if test="yearInspPeople != null  and yearInspPeople != '' "> and year_insp_people = #{yearInspPeople}</if>
+         </where>
+    </select>
+    
+    <select id="selectCarYearlyInspInfoById" parameterType="Integer" resultMap="CarYearlyInspInfoResult">
+        <include refid="selectCarYearlyInspInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCarYearlyInspInfo" parameterType="CarYearlyInspInfo">
+        insert into car_yearly_insp_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="carId != null  ">car_id,</if>
+			<if test="yeraInspDate != null  ">yera_insp_date,</if>
+			<if test="yearInspCost != null  ">year_insp_cost,</if>
+			<if test="yearInspDes != null  and yearInspDes != ''  ">year_insp_des,</if>
+			<if test="yearInspPeople != null  and yearInspPeople != ''  ">year_insp_people,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="carId != null  ">#{carId},</if>
+			<if test="yeraInspDate != null  ">#{yeraInspDate},</if>
+			<if test="yearInspCost != null  ">#{yearInspCost},</if>
+			<if test="yearInspDes != null  and yearInspDes != ''  ">#{yearInspDes},</if>
+			<if test="yearInspPeople != null  and yearInspPeople != ''  ">#{yearInspPeople},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCarYearlyInspInfo" parameterType="CarYearlyInspInfo">
+        update car_yearly_insp_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="carId != null  ">car_id = #{carId},</if>
+            <if test="yeraInspDate != null  ">yera_insp_date = #{yeraInspDate},</if>
+            <if test="yearInspCost != null  ">year_insp_cost = #{yearInspCost},</if>
+            <if test="yearInspDes != null  and yearInspDes != ''  ">year_insp_des = #{yearInspDes},</if>
+            <if test="yearInspPeople != null  and yearInspPeople != ''  ">year_insp_people = #{yearInspPeople},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteCarYearlyInspInfoById" parameterType="Integer">
+        delete from car_yearly_insp_info where id = #{id}
+    </delete>
+	
+    <delete id="deleteCarYearlyInspInfoByIds" parameterType="String">
+        delete from car_yearly_insp_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

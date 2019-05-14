@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('车辆列表')" />
+</head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								车牌号码：<input type="text" name="carLicense"/>
+							</li>
+
+							<li>
+								车辆类型：<input type="text" name="carType"/>
+							</li>
+
+							<li>
+								车辆所有人姓名：<input type="text" name="carOwerName"/>
+							</li>
+
+							<li>
+								车辆所有人地址：<input type="text" name="carOwnerAddress"/>
+							</li>
+
+							<li>
+								车辆使用性质：<input type="text" name="carUseType"/>
+							</li>
+
+							<li>
+								车辆品牌型号：<input type="text" name="carBrand"/>
+							</li>
+
+							<li>
+								车辆识别代码：<input type="text" name="carIdCode"/>
+							</li>
+
+							<li>
+								车辆发动机号码：<input type="text" name="carEngineNum"/>
+							</li>
+
+							<li>
+								车辆注册日期：<input type="text" name="carRegistDate"/>
+							</li>
+
+							<li>
+								车辆发证日期：<input type="text" name="carCertificateDate"/>
+							</li>
+
+							<li>
+								核载人数：<input type="text" name="carNuclearNum"/>
+							</li>
+
+							<li>
+								车辆总质量：<input type="text" name="carTotalMass"/>
+							</li>
+
+							<li>
+								汽车整备质量：<input type="text" name="carCurbWeight"/>
+							</li>
+
+							<li>
+								创建时间：<input type="text" name="createDate"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:carInfo:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:carInfo:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:carInfo:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:carInfo:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:carInfo:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:carInfo:remove')}]];
+        var prefix = ctx + "system/carInfo";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "车辆",
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'carId', 
+					title : '车辆信息id',
+					visible: false
+				},
+				{
+					field : 'carLicense', 
+					title : '车牌号码',
+					sortable: true
+				},
+				{
+					field : 'carType', 
+					title : '车辆类型',
+					sortable: true
+				},
+				{
+					field : 'carOwerName', 
+					title : '车辆所有人姓名',
+					sortable: true
+				},
+				{
+					field : 'carOwnerAddress', 
+					title : '车辆所有人地址',
+					sortable: true
+				},
+				{
+					field : 'carUseType', 
+					title : '车辆使用性质',
+					sortable: true
+				},
+				{
+					field : 'carBrand', 
+					title : '车辆品牌型号',
+					sortable: true
+				},
+				{
+					field : 'carIdCode', 
+					title : '车辆识别代码',
+					sortable: true
+				},
+				{
+					field : 'carEngineNum', 
+					title : '车辆发动机号码',
+					sortable: true
+				},
+				{
+					field : 'carRegistDate', 
+					title : '车辆注册日期',
+					sortable: true
+				},
+				{
+					field : 'carCertificateDate', 
+					title : '车辆发证日期',
+					sortable: true
+				},
+				{
+					field : 'carNuclearNum', 
+					title : '核载人数',
+					sortable: true
+				},
+				{
+					field : 'carTotalMass', 
+					title : '车辆总质量',
+					sortable: true
+				},
+				{
+					field : 'carCurbWeight', 
+					title : '汽车整备质量',
+					sortable: true
+				},
+				{
+					field : 'createDate', 
+					title : '创建时间',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.carId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.carId + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>
